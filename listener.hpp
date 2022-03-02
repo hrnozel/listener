@@ -119,21 +119,12 @@ class MulticastListener
           &addrlen
         );
 
-        if (nbytes < 0) {
-					return std::string{};
-        }
-        std::stringstream ss;
-
-        for (int i{ 6 }; i < nbytes; ++i)
-        {
-          ss << (int)msgbuf[i];
-
-          ss << ".";
-
+        if (nbytes < 0) 
+	{
+	  return std::string{};
         }
 
-        std::string message{ ss.str() };
-        message.pop_back();
+	std::string message{ reinterpret_cast<char*>(msgbuf), nbytes };
         return message;
       }
 
